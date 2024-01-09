@@ -1,8 +1,14 @@
 const express = require("express");
+// this is dotenv config imoirt to access environment variables
+require("dotenv").config();
+const bcrypt = require("bcryptjs");
+var jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 const User = require("../model/usersModel");
 
 const router = express.Router();
+
+const secret = process.env.JWT_SECRET;
 
 // Route 1: Route to create a new user using post
 router.post(
@@ -19,6 +25,8 @@ router.post(
     }
 
     const { username, email, password } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const passHash = await bcrypt.hash(password, salt);
 
     try {
       let user = await User.findOne({ $or: [{ email }, { username }] });
@@ -34,14 +42,63 @@ router.post(
       user = new User({
         username,
         email,
-        password,
+        password: passHash,
       });
 
       await user.save();
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
 
-      res.status(200).json({ message: "User created successfully" });
+      const authToken = jwt.sign(data, secret);
+      success = true;
+      res.json({ authToken, success });
     } catch (error) {
       console.error(error.message);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
+// Route 2: Route to login a user using post
+router.post(
+  "/login",
+  [body("identifier", "Please enter a valid email or username").exists(), body("password", "Password cannot be empty").exists()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    let success = false;
+    if (!errors.isEmpty()) {
+      success = false;
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { identifier, password } = req.body;
+    try {
+      // can login using email or username
+      let user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] });
+      if (!user) {
+        success = false;
+        return res.status(400).json({ error: "Login with proper credentials", success });
+      }
+
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare) {
+        success = false;
+        return res.status(400).json({ error: "Login with proper credentials", success });
+      }
+
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      const authToken = jwt.sign(data, secret);
+      success = true;
+      res.json({ authToken, success });
+    } catch (error) {
+      console.log(error);
       res.status(500).send("Internal Server Error");
     }
   }

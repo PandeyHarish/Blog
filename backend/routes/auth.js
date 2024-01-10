@@ -13,7 +13,7 @@ const secret = process.env.JWT_SECRET;
 
 // Route 1: Route to create a new user using post
 router.post(
-  "/createuser",
+  "/user/create",
   [
     body("username", "Enter a valid name.").isLength({ min: 3 }),
     body("email", "Enter a valid email.").isEmail(),
@@ -67,7 +67,7 @@ router.post(
 // Route 2: Route to create a new admin using post
 
 router.post(
-  "/createadmin",
+  "/admin/create",
   [
     body("username", "Enter a valid name.").isLength({ min: 3 }),
     body("email", "Enter a valid email.").isEmail(),
@@ -123,7 +123,7 @@ router.post(
 
 // Route 3: Route to login a user using post
 router.post(
-  "/login",
+  "/user/login",
   [body("identifier", "Please enter a valid email or username").exists(), body("password", "Password cannot be empty").exists()],
   async (req, res) => {
     const errors = validationResult(req);
@@ -165,7 +165,7 @@ router.post(
 
 // Route 4: Route to login a admin using post
 router.post(
-  "/adminlogin",
+  "/admin/login",
   [body("identifier", "Please enter a valid email or username").exists(), body("password", "Password cannot be empty").exists()],
   async (req, res) => {
     const errors = validationResult(req);

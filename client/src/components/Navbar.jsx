@@ -18,7 +18,7 @@ const Navbar = () => {
   return (
     <>
       <section
-        className={`sticky top-0 left-0 right-0 z-10 hidden border-b shadow-sm py-3 sm:block ${theme === "light" ? "bg-white" : "bg-zinc-900"} `}
+        className={`sticky top-0 left-0 right-0 z-10 hidden border-b shadow-sm py-3 sm:block ${theme === "light" ? "bg-white" : "bg-[#344955]"} `}
       >
         {/*  desktop navbar  */}
         <nav className="flex justify-between gap-2 px-4">
@@ -34,14 +34,14 @@ const Navbar = () => {
                 <Link to="/">Home</Link>
               </li>
               <li className="inline p-2 text-lg">
-                <Link to="/">Products</Link>
+                <Link to="/product">Products</Link>
               </li>
               <li className="inline p-2 text-lg">
                 <a href="#about">About</a>
               </li>
             </ul>
           </div>
-          
+
           <div className="flex">
             <ul>
               <li className="inline p-2 text-lg font-medium">

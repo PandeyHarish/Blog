@@ -20,11 +20,11 @@ const ThemeProvider = ({ children }) => {
 
   const updateBodyStyles = (selectedTheme) => {
     if (selectedTheme === "dark") {
-      document.body.style.backgroundColor = "#292c35";
+      document.body.style.backgroundColor = "#2c3e48";
       document.body.style.color = "white";
     } else {
-      document.body.style.backgroundColor = "white";
-      document.body.style.color = "black";
+      document.body.style.backgroundColor = "#f8f9fa";
+      document.body.style.color = "#344955";
     }
   };
 

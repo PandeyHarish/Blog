@@ -2,15 +2,19 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Toggle from "./Toggle";
 import ThemeContext from "../context/ThemeContext";
+import { useLogin } from "../context/LoginContext";
 
 const Navbar = () => {
   const [display, setDisplay] = useState("hidden");
   const { theme } = useContext(ThemeContext);
-
+  const { isLoggedIn, loggedout } = useLogin();
   const mobNav = () => {
     setDisplay((prevState) => (prevState === "hidden" ? "block" : "hidden"));
   };
-
+  const logout = () => {
+    localStorage.removeItem("auth-token");
+    loggedout();
+  };
   return (
     <>
       <section
@@ -37,11 +41,17 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-
+          
           <div className="flex">
             <ul>
               <li className="inline p-2 text-lg font-medium">
-                <Link to="/login">Login</Link>
+                {isLoggedIn === false ? (
+                  <Link to="/login">Login </Link>
+                ) : (
+                  <span onClick={logout} className="cursor-pointer">
+                    Logout
+                  </span>
+                )}
               </li>
             </ul>
             <Toggle />
@@ -59,7 +69,7 @@ const Navbar = () => {
               <div className="flex gap-4">
                 <Toggle />
                 <p className="text-2xl " onClick={mobNav}>
-                  <i className={`cursor-pointer ri-${display === "hidden" ? "menu" : "close"}-line items-center align-middle `}></i>
+                  <i className={`cursor-pointer ri-${display === "hidden" ? "menu" : "close"}-line inline-block align-bottom `}></i>
                 </p>
               </div>
             </div>

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../context/LoginContext";
 
 const LoginSignup = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [credentials, setCredentials] = useState([{ username: "", email: "", password: "" }]);
+  const { loggedin } = useLogin();
 
   const host = "http://localhost:5000";
   let history = useNavigate();
@@ -16,7 +18,6 @@ const LoginSignup = () => {
   };
   const login = async (e) => {
     e.preventDefault();
-    console.log(credentials);
     const response = await fetch(`${host}/api/auth/user/login`, {
       method: "POST",
       headers: {
@@ -27,34 +28,36 @@ const LoginSignup = () => {
     const json = await response.json();
     if (json.success) {
       localStorage.setItem("auth-token", json.authToken);
+      loggedin();
       history("/");
-      alert("logged in successfully");
+     
+     
       // showAlert("Login successful", "success");
     } else {
       // showAlert("Please check your credentials", "error");
     }
   };
 
-    const signup = async (e) => {
-      e.preventDefault();
-      
-      const response = await fetch(`${host}/api/auth/user/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: credentials.email,username: credentials.username, password: credentials.password }),
-      });
-      const json = await response.json();
-      if (json.success) {
-        localStorage.setItem("auth-token", json.authToken);
-        history("/");
-        alert("user created");
-        // showAlert("Login successful", "success");
-      } else {
-        // showAlert("Please check your credentials", "error");
-      }
-    };
+  const signup = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(`${host}/api/auth/user/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: credentials.email, username: credentials.username, password: credentials.password }),
+    });
+    const json = await response.json();
+    if (json.success) {
+      localStorage.setItem("auth-token", json.authToken);
+      history("/");
+      alert("user created");
+      // showAlert("Login successful", "success");
+    } else {
+      // showAlert("Please check your credentials", "error");
+    }
+  };
 
   return (
     <div className="grid place-items-center h-screen bg-gradient-to-r from-blue-900 to-blue-400 text-black">
@@ -157,7 +160,6 @@ const LoginSignup = () => {
                       placeholder="Confirm password"
                       className="w-full px-4 py-2 border-b border-gray-400 focus:outline-none focus:border-blue-500"
                       required
-                      
                     />
                   </div>
                   <div className="mb-2">

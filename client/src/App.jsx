@@ -18,8 +18,11 @@ function App() {
       document.body.style.color = "#131313";
     }
   };
+  
   return (
+    
     <>
+    
       <BrowserRouter>
         <Navbar mode={mode} changeTheme={changeTheme} />
         <Routes>
@@ -29,6 +32,7 @@ function App() {
       </BrowserRouter>
     </>
   );
+ 
 }
 
 export default App;

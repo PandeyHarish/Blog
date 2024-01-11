@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Available routes
 app.use("/api/auth", require("./routes/auth"));
-// app.use("/api/notes", require("./routes/notes"));
+app.use("/api/blogs", require("./routes/blogs"));
 
 app.listen(port, () => {
   console.log(`Blog server listening on http://localhost:${port}`);

@@ -3,6 +3,7 @@ const express = require("express");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
+var fetchuser = require("../middleware/fetchuser");
 const { body, validationResult } = require("express-validator");
 const User = require("../model/usersModel");
 const Admin = require("../model/adminModel");
@@ -63,7 +64,6 @@ router.post(
   }
 );
 
-
 // Route 2: Route to create a new admin using post
 
 router.post(
@@ -116,10 +116,6 @@ router.post(
     }
   }
 );
-
-
-
-
 
 // Route 3: Route to login a user using post
 router.post(
@@ -205,6 +201,16 @@ router.post(
   }
 );
 
-
+// Route 5: Fetch information about the logged-in user
+router.post("/user/getuser", fetchuser, async (req, res) => {
+  try {
+    // Fetch user information from the database based on the ID in req.user.id
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 module.exports = router;

@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import { useLogin } from "./context/LoginContext";
-// import Product from "./components/Product";
+
 
 function App() {
   const [mode, setMode] = useState("light");
+
   let changeTheme = () => {
     if (mode === "light") {
       setMode("dark");
@@ -32,22 +33,24 @@ function App() {
       loggedin();
     }
   }, [loggedin]);
-  
+
+
   return (
-    < >
+    <>
       <BrowserRouter>
         <Navbar mode={mode} changeTheme={changeTheme} />
+
         
-        
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          {/* <Route exact path="/product" element={<Product/>} /> */}
-          <Route exact path="/login" element={<LoginSignup />} />
-        </Routes>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+
+            {/* <Route exact path="/product" element={<Product/>} /> */}
+            <Route exact path="/login" element={<LoginSignup />} />
+          </Routes>
+         
       </BrowserRouter>
     </>
   );
- 
 }
 
 export default App;

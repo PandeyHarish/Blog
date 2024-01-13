@@ -1,4 +1,5 @@
 // import BlogCard from "./BlogCard";
+import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import ViewBlog from "./ViewBlog";
 
@@ -9,6 +10,7 @@ const Home = () => {
         {/* <BlogCard /> */}
         <ViewBlog/>
         <Sidebar />
+        <Footer/>
       </div>
     </>
   );

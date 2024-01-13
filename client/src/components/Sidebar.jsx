@@ -4,7 +4,7 @@ import test from "./assets/images/test.jpg";
 const Sidebar = () => {
   const styles = {
     igbtn: {
-      background: "linear-gradient(90deg, rgba(249,206,52,1) 0%, rgba(238,42,123,1) 35%, rgba(98,40,215,1) 100%)",
+      background: "linear-gradient(45deg, rgba(249,206,52,1) 0%, rgba(238,42,123,1) 35%, rgba(98,40,215,1) 100%)",
     },
   };
   const { theme } = useContext(ThemeContext);
@@ -23,7 +23,7 @@ const Sidebar = () => {
               <i className="ri-twitter-fill"></i>
             </div>
 
-            <div className="w-15 p-1 rounded-md bg-red-800 text-lg text-center">
+            <div className="w-15 p-1 rounded-md bg-red-600 text-lg text-center">
               <i className="ri-youtube-fill"></i>
             </div>
 

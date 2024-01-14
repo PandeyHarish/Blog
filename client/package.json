@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tinymce/tinymce-react": "^4.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
-    "remixicon": "^4.0.1"
+    "remixicon": "^4.0.1",
+    "tinymce": "^6.8.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

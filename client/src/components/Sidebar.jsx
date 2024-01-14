@@ -15,35 +15,35 @@ const Sidebar = () => {
         <div className={`w-full sm:w-[300px] sm:h-[149px] text-white ${theme === "dark" ? "bg-[#344955]" : "bg-white"} p-3 rounded-md`}>
           <h1 className="text-xl font-bold">Follow Us</h1>
           <div className="mt-2 grid grid-cols-4 gap-3">
-            <div className="w-15 p-1 rounded-md bg-blue-800 text-lg text-center">
+            <div className="w-15 p-1 rounded-md cursor-pointer  bg-blue-800 text-lg text-center">
               <i className="ri-facebook-fill"></i>
             </div>
 
-            <div className="w-15 p-1 rounded-md bg-blue-600 text-lg text-center">
+            <div className="w-15 p-1 rounded-md cursor-pointer  bg-blue-600 text-lg text-center">
               <i className="ri-twitter-fill"></i>
             </div>
 
-            <div className="w-15 p-1 rounded-md bg-red-600 text-lg text-center">
+            <div className="w-15 p-1 rounded-md cursor-pointer  bg-red-600 text-lg text-center">
               <i className="ri-youtube-fill"></i>
             </div>
 
-            <div className={`w-15 p-1 rounded-md  text-lg text-center `} style={styles.igbtn}>
+            <div className={`w-15 p-1 rounded-md   cursor-pointer text-lg text-center `} style={styles.igbtn}>
               <i className="ri-instagram-fill"></i>
             </div>
 
-            <div className="w-15 p-1 rounded-md bg-orange-600 text-lg text-center">
+            <div className="w-15 p-1 rounded-md cursor-pointer  bg-orange-600 text-lg text-center">
               <i className="ri-blogger-fill"></i>
             </div>
 
-            <div className="w-15 p-1 rounded-md bg-[#4872a0] text-lg text-center">
+            <div className="w-15 p-1 rounded-md  cursor-pointer bg-[#4872a0] text-lg text-center">
               <i className="ri-vk-fill"></i>
             </div>
 
-            <div className="w-15 p-1 rounded-md bg-pink-600 text-lg text-center">
+            <div className="w-15 p-1 rounded-md cursor-pointer  bg-pink-600 text-lg text-center">
               <i className="ri-basketball-line"></i>
             </div>
 
-            <div className="w-15 p-1 rounded-md bg-indigo-600 text-lg text-center">
+            <div className="w-15 p-1 rounded-md cursor-pointer  bg-indigo-600 text-lg text-center">
               <i className="ri-twitch-fill"></i>
             </div>
           </div>
@@ -80,8 +80,6 @@ const Sidebar = () => {
               </h3>
             </div>
           </div>
-
-
         </div>
       </div>
     </>

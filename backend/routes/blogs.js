@@ -28,6 +28,7 @@ router.post("/create", articleValidation, async (req, res) => {
       author, // passing the author's ID
       category, 
       tag, 
+      
     });
 
     res.status(201).json({ article: newArticle });

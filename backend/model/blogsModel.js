@@ -6,7 +6,7 @@ const articleSchema = new mongoose.Schema({
   tag: { type: String, required: true },
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   category: { type: String, required: true },
-  // likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  imageUrl: { type: String },
 });
 
 const Article = mongoose.model("Article", articleSchema);

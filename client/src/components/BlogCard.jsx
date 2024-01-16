@@ -7,7 +7,7 @@ const BlogCard = () => {
   return (
     <div className="m-6 sm:ml-32 mt-12">
       {/* card div */}
-      <div className={`p-4 w-[384px] h-[485px] sm:w-[650px] sm:h-[250px] ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
+      <div className={`p-4 w-[384px]  sm:w-[650px]  ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
         <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, ea.</h3>
         <p className="py-3">
           by <span className="text-[#366bea] font-medium">Author</span> : timestamp

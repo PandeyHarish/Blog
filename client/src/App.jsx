@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import { useLogin } from "./context/LoginContext";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
             {/* <Route exact path="/product" element={<Product/>} /> */}
             <Route exact path="/login" element={<LoginSignup />} />
           </Routes>
-         
+         <Footer/>
       </BrowserRouter>
     </>
   );

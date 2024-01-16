@@ -3,18 +3,19 @@ import { Link } from "react-router-dom";
 import Toggle from "./Toggle";
 import ThemeContext from "../context/ThemeContext";
 import { useLogin } from "../context/LoginContext";
+import Dropdown from "./DropDown";
 
 const Navbar = () => {
   const [display, setDisplay] = useState("hidden");
   const { theme } = useContext(ThemeContext);
-  const { isLoggedIn, loggedout } = useLogin();
+  const { isLoggedIn } = useLogin();
   const mobNav = () => {
     setDisplay((prevState) => (prevState === "hidden" ? "block" : "hidden"));
   };
-  const logout = () => {
-    localStorage.removeItem("auth-token");
-    loggedout();
-  };
+  // const logout = () => {
+  //   localStorage.removeItem("auth-token");
+  //   loggedout();
+  // };
   return (
     <>
       <section
@@ -44,15 +45,7 @@ const Navbar = () => {
 
           <div className="flex">
             <ul>
-              <li className="inline p-2 text-lg font-medium">
-                {isLoggedIn === false ? (
-                  <Link to="/login">Login </Link>
-                ) : (
-                  <span onClick={logout} className="cursor-pointer">
-                    Logout
-                  </span>
-                )}
-              </li>
+              <li className="inline p-2 text-lg font-medium">{isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown />}</li>
             </ul>
             <Toggle />
           </div>

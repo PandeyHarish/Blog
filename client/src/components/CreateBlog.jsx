@@ -5,19 +5,46 @@ import { useContext } from "react";
 
 export default function CreateBlog() {
   const [content, setContent] = useState({ title: "", body: "" });
+  const [image, setImage] = useState(null);
 
   const handleEditorChange = (content, editor) => {
-    // Use setContent with the previous state to ensure consistency
     setContent((prevContent) => ({ ...prevContent, body: editor.getContent() }));
   };
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
   const key = import.meta.env.VITE_tinymce_key;
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(content);
-    // Reset the content after submission if needed
-    setContent({ title: "", body: "" });
+
+    try {
+      const formData = new FormData();
+      formData.append("title", content.title);
+      formData.append("content", content.body);
+      formData.append("image", image);
+      formData.append("author", "659cd84248e26c9728945cd6");
+      formData.append("tag", "test");
+      formData.append("category", "category");
+
+      const response = await fetch("http://127.0.0.1:5000/api/blogs/create", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        // const data = await response.json();
+        console.log("data saved"); // Log the response from the server
+
+        // Reset the content and image state after submission if needed
+        setContent({ title: "", body: "" });
+        setImage(null);
+      } else {
+        console.error("Error submitting form:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   const { theme } = useContext(ThemeContext);
@@ -27,7 +54,7 @@ export default function CreateBlog() {
       <div className={`w-[650px] p-6  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}>
         <h1 className="text-3xl">New Blog Post</h1>
 
-        <form onSubmit={handleSubmit} className="mt-5 ">
+        <form onSubmit={handleSubmit} className="mt-5">
           <input
             type="text"
             name="title"
@@ -37,10 +64,10 @@ export default function CreateBlog() {
             className={`w-full p-4 border outline-none rounded-md mb-4  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}
           />
           <br />
-          <input type="file" name="image" id="image" accept="image/*" className="my-2" />
+          <input type="file" name="image" id="image" accept="image/*" onChange={handleImageChange} className="my-2" />
           <Editor
             apiKey={key}
-            value={content.body} 
+            value={content.body}
             init={{
               direction: "ltr",
               plugins:

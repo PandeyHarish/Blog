@@ -26,7 +26,7 @@ const Dropdown = () => {
 
       {isOpen && (
         <div
-          className={`absolute left-0 mt-2 w-24 rounded-md shadow-lg ${
+          className={`absolute left-0 mt-3.5  w-24 rounded-md shadow-lg ${
             theme === "light" ? "bg-white" : "bg-[#344955]"
           } ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >

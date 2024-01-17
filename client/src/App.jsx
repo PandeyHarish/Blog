@@ -7,7 +7,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import { useLogin } from "./context/LoginContext";
 import Footer from "./components/Footer";
-
+import Profile from "./components/Profile";
+import CreateBlog from "./components/CreateBlog";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -35,20 +36,20 @@ function App() {
     }
   }, [loggedin]);
 
-
   return (
     <>
       <BrowserRouter>
         <Navbar mode={mode} changeTheme={changeTheme} />
 
-        
-          <Routes>
-            <Route exact path="/" element={<Home />} />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/me" element={<Profile />} />
+          <Route exact path="/new" element={<CreateBlog />} />
+          {/* <Route exact path="/product" element={<Product/>} /> */}
+          <Route exact path="/login" element={<LoginSignup />} />
+        </Routes>
 
-            {/* <Route exact path="/product" element={<Product/>} /> */}
-            <Route exact path="/login" element={<LoginSignup />} />
-          </Routes>
-         <Footer/>
+        <Footer />
       </BrowserRouter>
     </>
   );

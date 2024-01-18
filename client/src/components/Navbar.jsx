@@ -4,18 +4,17 @@ import Toggle from "./Toggle";
 import ThemeContext from "../context/ThemeContext";
 import { useLogin } from "../context/LoginContext";
 import Dropdown from "./DropDown";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [display, setDisplay] = useState("hidden");
   const { theme } = useContext(ThemeContext);
   const { isLoggedIn } = useLogin();
+  const { username } = props;
   const mobNav = () => {
     setDisplay((prevState) => (prevState === "hidden" ? "block" : "hidden"));
   };
-  // const logout = () => {
-  //   localStorage.removeItem("auth-token");
-  //   loggedout();
-  // };
+
   return (
     <>
       <section
@@ -45,7 +44,7 @@ const Navbar = () => {
 
           <div className="flex">
             <ul>
-              <li className="inline p-2 text-lg font-medium">{isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown />}</li>
+              <li className="inline p-2 text-lg font-medium">{isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={username}/>}</li>
             </ul>
             <Toggle />
           </div>
@@ -97,3 +96,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+Navbar.propTypes = {
+  username: PropTypes.string,
+};

@@ -2,8 +2,12 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeContext from "../context/ThemeContext";
 import { useLogin } from "../context/LoginContext";
+import PropTypes from "prop-types";
 
-const Dropdown = () => {
+
+
+const Dropdown = (props) => {
+  const { username } = props;
   const [isOpen, setIsOpen] = useState(false);
    const { theme } = useContext(ThemeContext);
    const { loggedout } = useLogin();
@@ -11,6 +15,9 @@ const Dropdown = () => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+  const hide =()=>{
+    setIsOpen(false);
+  }
 
   const logout = () => {
     localStorage.removeItem("auth-token");
@@ -21,7 +28,7 @@ const Dropdown = () => {
   return (
     <div className="relative inline-block text-left">
       <button type="button" className="inline-flex justify-center " onClick={toggleDropdown}>
-        User
+        {username}
       </button>
 
       {isOpen && (
@@ -31,7 +38,7 @@ const Dropdown = () => {
           } ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           <div className="py-1">
-            <Link to={"/me"} className={`block w-full text-left px-4 py-2 text-sm ${theme === "light" ? "text-gray-700" : "text-white"} `}>
+            <Link to={"/me"} onClick={hide} className={`block w-full text-left px-4 py-2 text-sm ${theme === "light" ? "text-gray-700" : "text-white"} `}>
               Profile
             </Link>
             <button
@@ -50,3 +57,8 @@ const Dropdown = () => {
 };
 
 export default Dropdown;
+
+
+Dropdown.propTypes = {
+  username: PropTypes.string,
+};

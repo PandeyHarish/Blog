@@ -7,7 +7,7 @@ const LoginSignup = () => {
   const [credentials, setCredentials] = useState([{ username: "", email: "", password: "" }]);
   const { loggedin } = useLogin();
 
-  const host = "http://localhost:5000";
+  const host = import.meta.env.VITE_localhost;
   let history = useNavigate();
 
   const toggleSignup = () => {

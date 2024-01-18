@@ -6,7 +6,6 @@ require("dotenv").config();
 
 const secret = process.env.JWT_SECRET;
 
-
 // get user form the jwt token and add id to req object
 const fetchuser = async (req, res, next) => {
   const token = req.header("auth-token");

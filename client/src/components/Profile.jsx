@@ -6,6 +6,8 @@ import { useLogin } from "../context/LoginContext";
 
 const Profile = () => {
   const { theme } = useContext(ThemeContext);
+
+  
   const [user, setUser] = useState([]);
   const { isLoggedIn } = useLogin();
 

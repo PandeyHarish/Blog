@@ -44,7 +44,9 @@ const Navbar = (props) => {
 
           <div className="flex">
             <ul>
-              <li className="inline p-2 text-lg font-medium">{isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={username}/>}</li>
+              <li className="inline p-2 text-lg font-medium">
+                {isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={username} />}
+              </li>
             </ul>
             <Toggle />
           </div>
@@ -85,6 +87,9 @@ const Navbar = (props) => {
                   <a href="#contact" className="text-xl ">
                     Contact Us
                   </a>
+                </li>
+                <li className="inline p-2 text-lg font-medium">
+                  {isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={"Dashboard"} />}
                 </li>
               </ul>
             </div>

@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import { useLogin } from "./context/LoginContext";
-// import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import CreateBlog from "./components/CreateBlog";
+import GoToTopButton from "./components/GoToTopButton";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -28,7 +29,6 @@ function App() {
   const { loggedin } = useLogin();
   if (localStorage.getItem("auth-token")) {
     loggedin;
-    
   }
 
   const authToken = localStorage.getItem("auth-token");
@@ -40,9 +40,8 @@ function App() {
     const paresedData = await res.json();
     setUser(paresedData);
   };
- 
+
   useEffect(() => {
-    
     if (authToken) {
       fetchinfo();
       // Call the login function from the context to set the user as logged in
@@ -62,8 +61,8 @@ function App() {
           {/* <Route exact path="/product" element={<Product/>} /> */}
           <Route exact path="/login" element={<LoginSignup />} />
         </Routes>
-
-        {/* <Footer /> */}
+        <GoToTopButton />
+        <Footer />
       </BrowserRouter>
     </>
   );

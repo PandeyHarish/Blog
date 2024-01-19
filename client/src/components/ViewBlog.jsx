@@ -4,10 +4,11 @@ import ThemeContext from "../context/ThemeContext";
 
 const ViewBlog = () => {
   const { theme } = useContext(ThemeContext);
+
   return (
     <>
-      <div className="m-6 sm:ml-32 mt-12">
-        <div className={`w-[384px] rounded-md sm:w-[650px]  ${theme === "dark" ? "bg-[#344955]" : "bg-white"} p-6`}>
+      <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-32 mt-12">
+        <div className={`w-full sm:w-[384px] md:w-[650px] rounded-md ${theme === "dark" ? "bg-[#344955]" : "bg-white"} p-6`}>
           <h3 className="font-bold text-3xl hover:text-blue-600 cursor-pointer my-3">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, ea.
           </h3>
@@ -15,7 +16,7 @@ const ViewBlog = () => {
             by <span className="text-blue-600 font-bold">Author</span> | Timestamp
           </p>
           <hr className="my-5" />
-          <img src={test} alt="title" className="mt-5 mb-5 rounded-md"/>
+          <img src={test} alt="title" className="mt-5 mb-5 rounded-md w-full" />
           <p className="text-justify">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam nemo fuga quis beatae ut illo accusantium esse. Aspernatur dignissimos
             eius reiciendis. Laboriosam, perferendis. Obcaecati dolorum perspiciatis alias laudantium distinctio suscipit aperiam possimus odio, earum

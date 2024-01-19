@@ -9,7 +9,7 @@ import Sidebar from "./Sidebar";
 const Home = () => {
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2">
+      <div className="flex flex-wrap">
         <BlogCard />
         {/* <ViewBlog/> */}
         

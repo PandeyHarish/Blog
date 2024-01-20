@@ -33,10 +33,13 @@ router.post("/create", upload.single("image"), articleValidation, async (req, re
   }
 
   try {
-    const { title, content, author, tag, category } = req.body; //, category, tag
+    const { title, content, author, tag, category, author_name } = req.body;
+   
 
     // Check if a file was provided
     const imageUrl = req.file ? req.file.filename : null;
+    const date=new Date();
+    const dateTime = date.toISOString();
 
     // Create a new article based on the Article model
     const newArticle = await Article.create({
@@ -44,9 +47,12 @@ router.post("/create", upload.single("image"), articleValidation, async (req, re
       content,
       author, // passing the author's ID
       category,
+      author_name,
       tag,
       imageUrl, // Add the image URL to the article
+      dateTime
     });
+   
 
     res.status(201).json({ article: newArticle });
   } catch (error) {

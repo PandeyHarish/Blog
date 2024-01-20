@@ -1,4 +1,5 @@
-import BlogCard from "./BlogCard";
+// import BlogCard from "./BlogCard";
+import BlogItem from "./BlogItem";
 // import CreateBlog from "./CreateBlog";
 
 
@@ -9,8 +10,9 @@ import Sidebar from "./Sidebar";
 const Home = () => {
   return (
     <>
-      <div className="flex flex-wrap">
-        <BlogCard />
+      <div className="flex flex-wrap h-screen">
+        
+        <BlogItem/>
         {/* <ViewBlog/> */}
         
         <Sidebar />

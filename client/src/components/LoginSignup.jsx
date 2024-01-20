@@ -60,8 +60,8 @@ const LoginSignup = () => {
   };
 
   return (
-    <div className="grid place-items-center m-4 h-[250px] mt-40 sm:m-0 sm:h-screen text-black ">
-      <div className="bg-white rounded-lg shadow-xl w-full sm:w-2/3 lg:w-1/2 xl:w-1/3 p-8 z-20">
+    <div className="grid place-items-center m-4  h-[250px] mt-40 sm:m-0 sm:h-[450px] text-black ">
+      <div className="bg-white rounded-lg shadow-xl w-full sm:w-2/3 lg:w-1/2 xl:w-1/3 p-8 ">
         <div className="flex justify-center mb-8">
           <h1 className={`text-3xl font-bold text-center text-black w-full transition-colors duration-500 ease-in-out`}>
             {isLoginForm ? "Login" : "Signup"}

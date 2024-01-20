@@ -66,56 +66,56 @@ router.post(
 
 // Route 2: Route to create a new admin using post
 
-router.post(
-  "/admin/create",
-  [
-    body("username", "Enter a valid name.").isLength({ min: 3 }),
-    body("email", "Enter a valid email.").isEmail(),
-    body("password", "Enter a valid password (minimum 5 characters).").isLength({ min: 5 }),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+// router.post(
+//   "/admin/create",
+//   [
+//     body("username", "Enter a valid name.").isLength({ min: 3 }),
+//     body("email", "Enter a valid email.").isEmail(),
+//     body("password", "Enter a valid password (minimum 5 characters).").isLength({ min: 5 }),
+//   ],
+//   async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
 
-    const { username, email, password } = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const passHash = await bcrypt.hash(password, salt);
+//     const { username, email, password } = req.body;
+//     const salt = await bcrypt.genSalt(10);
+//     const passHash = await bcrypt.hash(password, salt);
 
-    try {
-      let admin = await Admin.findOne({ $or: [{ email }, { username }] });
+//     try {
+//       let admin = await Admin.findOne({ $or: [{ email }, { username }] });
 
-      if (admin) {
-        if (admin.email === email) {
-          return res.status(400).json({ message: "Email already exists" });
-        } else {
-          return res.status(400).json({ message: "Username already exists" });
-        }
-      }
+//       if (admin) {
+//         if (admin.email === email) {
+//           return res.status(400).json({ message: "Email already exists" });
+//         } else {
+//           return res.status(400).json({ message: "Username already exists" });
+//         }
+//       }
 
-      admin = new Admin({
-        username,
-        email,
-        password: passHash,
-      });
+//       admin = new Admin({
+//         username,
+//         email,
+//         password: passHash,
+//       });
 
-      await admin.save();
-      const data = {
-        admin: {
-          id: admin.id,
-        },
-      };
+//       await admin.save();
+//       const data = {
+//         admin: {
+//           id: admin.id,
+//         },
+//       };
 
-      const authToken = jwt.sign(data, secret);
-      success = true;
-      res.json({ authToken, success });
-    } catch (error) {
-      console.error(error.message);
-      res.status(500).send("Internal Server Error");
-    }
-  }
-);
+//       const authToken = jwt.sign(data, secret);
+//       success = true;
+//       res.json({ authToken, success });
+//     } catch (error) {
+//       console.error(error.message);
+//       res.status(500).send("Internal Server Error");
+//     }
+//   }
+// );
 
 // Route 3: Route to login a user using post
 router.post(
@@ -160,46 +160,46 @@ router.post(
 );
 
 // Route 4: Route to login a admin using post
-router.post(
-  "/admin/login",
-  [body("identifier", "Please enter a valid email or username").exists(), body("password", "Password cannot be empty").exists()],
-  async (req, res) => {
-    const errors = validationResult(req);
-    let success = false;
-    if (!errors.isEmpty()) {
-      success = false;
-      return res.status(400).json({ errors: errors.array() });
-    }
+// router.post(
+//   "/admin/login",
+//   [body("identifier", "Please enter a valid email or username").exists(), body("password", "Password cannot be empty").exists()],
+//   async (req, res) => {
+//     const errors = validationResult(req);
+//     let success = false;
+//     if (!errors.isEmpty()) {
+//       success = false;
+//       return res.status(400).json({ errors: errors.array() });
+//     }
 
-    const { identifier, password } = req.body;
-    try {
-      // can login using email or username
-      let admin = await Admin.findOne({ $or: [{ email: identifier }, { username: identifier }] });
-      if (!admin) {
-        success = false;
-        return res.status(400).json({ error: "Login with proper credentials", success });
-      }
+//     const { identifier, password } = req.body;
+//     try {
+//       // can login using email or username
+//       let admin = await Admin.findOne({ $or: [{ email: identifier }, { username: identifier }] });
+//       if (!admin) {
+//         success = false;
+//         return res.status(400).json({ error: "Login with proper credentials", success });
+//       }
 
-      const passwordCompare = await bcrypt.compare(password, admin.password);
-      if (!passwordCompare) {
-        success = false;
-        return res.status(400).json({ error: "Login with proper credentials", success });
-      }
+//       const passwordCompare = await bcrypt.compare(password, admin.password);
+//       if (!passwordCompare) {
+//         success = false;
+//         return res.status(400).json({ error: "Login with proper credentials", success });
+//       }
 
-      const data = {
-        admin: {
-          id: admin.id,
-        },
-      };
-      const authToken = jwt.sign(data, secret);
-      success = true;
-      res.json({ authToken, success });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Internal Server Error");
-    }
-  }
-);
+//       const data = {
+//         admin: {
+//           id: admin.id,
+//         },
+//       };
+//       const authToken = jwt.sign(data, secret);
+//       success = true;
+//       res.json({ authToken, success });
+//     } catch (error) {
+//       console.log(error);
+//       res.status(500).send("Internal Server Error");
+//     }
+//   }
+// );
 
 // Route 5: Fetch information about the logged-in user
 router.post("/user/getuser", fetchuser, async (req, res) => {

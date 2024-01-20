@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
+import ThemeContext from "../context/ThemeContext";
+import { useContext } from "react";
 
 const Footer = () => {
+   const { theme } = useContext(ThemeContext);
   return (
     <>
-      <div className="w-full">
-        <div className="w-full bg-[#344955] text-white py-5">
+      <div className="w-full fixed bottom-0">
+        <div className={`w-full   py-5 ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-5 mx-auto md:w-[970px]">
             <div className="col-span-1 flex items-center mx-auto">
               <h2 className="text-2xl font-bold">Blogger</h2>
@@ -15,7 +18,7 @@ const Footer = () => {
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem nostrum, vero modi ipsa Autem nostrum, vero modi ipsa.
               </p>
             </div>
-            <div className="col-span-1 flex sm:hidden md:flex gap-2 items-center mx-auto">
+            <div className="col-span-1 flex sm:hidden md:flex gap-2 items-center mx-auto text-white">
               <div className="h-[36px] w-[36px] aspect-square bg-[#3b5999] hover:bg-[#4f6aa3] rounded flex items-center justify-center text-xl cursor-pointer">
                 <i className="ri-facebook-fill"></i>
               </div>
@@ -34,7 +37,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="w-full bg-[#2c3e48] text-white py-2">
+        <div className={`w-full ${theme === "dark" ? "bg-[#2c3e48]" : "bg-[#ececec]"} py-2`}>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mx-auto md:w-[970px]">
             <div className="col-span-1 flex items-center mx-auto">
               <p className="text-base">

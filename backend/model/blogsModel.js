@@ -5,8 +5,10 @@ const articleSchema = new mongoose.Schema({
   content: { type: String, required: true },
   tag: { type: String, required: true },
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  author_name: { type: String, required: true },
   category: { type: String, required: true },
   imageUrl: { type: String },
+  dateTime: { type: String}
 });
 
 const Article = mongoose.model("Article", articleSchema);

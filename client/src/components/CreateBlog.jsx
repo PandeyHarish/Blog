@@ -12,7 +12,8 @@ export default function CreateBlog(props) {
   const [image, setImage] = useState(null);
   const { isLoggedIn } = useLogin();
   const { theme } = useContext(ThemeContext);
-  const { userId } = props;
+  const { userId, author_name } = props;
+ 
 
   const handleEditorChange = (content, editor) => {
     setContent((prevContent) => ({ ...prevContent, body: editor.getContent() }));
@@ -46,6 +47,7 @@ export default function CreateBlog(props) {
       formData.append("content", content.body);
       formData.append("image", image);
       formData.append("author", userId);
+      formData.append("author_name", author_name);
       formData.append("tag", content.tag);
       formData.append("category", content.category);
 
@@ -147,4 +149,5 @@ export default function CreateBlog(props) {
 
 CreateBlog.propTypes = {
   userId: PropTypes.string,
+  author_name: PropTypes.string,
 };

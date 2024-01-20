@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const { Article } = require("../model/blogsModel");
 const multer = require("multer");
+const fetchuser = require("../middleware/fetchuser");
 
 // Multer storage configuration
 const storage = multer.diskStorage({
@@ -20,8 +21,8 @@ const upload = multer({ storage });
 const articleValidation = [
   body("title", "Enter a valid title.").isLength({ min: 3 }),
   body("content", "Please enter a description with at least 20 characters.").isLength({ min: 2 }),
-  //   body("category", "Enter a valid category with at least 4 characters.").isLength({ min: 4 }),
-  //   body("tag", "Enter a proper tag with at least 3 characters.").isLength({ min: 3 }),
+  body("category", "Enter a valid category with at least 4 characters.").isLength({ min: 4 }),
+  body("tag", "Enter a proper tag with at least 3 characters.").isLength({ min: 3 }),
 ];
 
 // POST endpoint to create a new article with validations
@@ -53,4 +54,23 @@ router.post("/create", upload.single("image"), articleValidation, async (req, re
   }
 });
 
+router.get("/fetcharticles", async (req, res) => {
+  try {
+    const blogs = await Article.find();
+    res.json(blogs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/fetchuserblogs", fetchuser, async (req, res) => {
+  try {
+    const notes = await Article.find({ user: req.user._id });
+    res.json(notes);
+  } catch (error) {
+    console.error("Error fetching Blogs:", error.message);
+    res.status(500).json({ error: "Failed to fetch blogs" });
+  }
+});
 module.exports = router;

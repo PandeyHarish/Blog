@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import CreateBlog from "./components/CreateBlog";
 import GoToTopButton from "./components/GoToTopButton";
+import Alert from "./components/Alert";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -30,6 +31,17 @@ function App() {
   if (localStorage.getItem("auth-token")) {
     loggedin;
   }
+  const [alert, setAlert] = useState(null);
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type,
+    });
+    setTimeout(() => {
+      setAlert(null);
+    }, 1500);
+  };
 
   const authToken = localStorage.getItem("auth-token");
   const fetchinfo = async () => {
@@ -48,13 +60,12 @@ function App() {
       loggedin();
     }
   }, [loggedin]);
-  
 
   return (
     <>
       <BrowserRouter>
-        <Navbar mode={mode} username={user.username} changeTheme={changeTheme} />
-
+        <Navbar mode={mode} username={user.username} showAlert={showAlert} changeTheme={changeTheme} />
+        <Alert alert={alert} />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/me" element={<Profile />} />

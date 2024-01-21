@@ -1,0 +1,50 @@
+/* Alert */
+.alert {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  animation: slide-in 0.5s ease forwards, fade-out 0.5s ease-in 2.5s forwards;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.error {
+  background-color: #f44336;
+  color: white;
+}
+
+.warning {
+  background-color: #ff9800;
+  color: white;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+}

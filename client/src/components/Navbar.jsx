@@ -10,7 +10,7 @@ const Navbar = (props) => {
   const [display, setDisplay] = useState("hidden");
   const { theme } = useContext(ThemeContext);
   const { isLoggedIn } = useLogin();
-  const { username } = props;
+  const { username,showAlert } = props;
   const mobNav = () => {
     setDisplay((prevState) => (prevState === "hidden" ? "block" : "hidden"));
   };
@@ -45,7 +45,7 @@ const Navbar = (props) => {
           <div className="flex">
             <ul>
               <li className="inline p-2 text-lg font-medium">
-                {isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={username} />}
+                {isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={username} showAlert={showAlert} />}
               </li>
             </ul>
             <Toggle />
@@ -89,7 +89,7 @@ const Navbar = (props) => {
                   </a>
                 </li>
                 <li className="inline p-2 text-lg font-medium">
-                  {isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={"Dashboard"} />}
+                  {isLoggedIn === false ? <Link to="/login">Login </Link> : <Dropdown username={"Dashboard"}  showAlert={showAlert}/>}
                 </li>
               </ul>
             </div>
@@ -104,4 +104,5 @@ export default Navbar;
 
 Navbar.propTypes = {
   username: PropTypes.string,
+  showAlert: PropTypes.func,
 };

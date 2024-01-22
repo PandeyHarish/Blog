@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../context/LoginContext";
+import PropTypes from "prop-types";
 
-const LoginSignup = () => {
+const LoginSignup = ({ showAlert }) => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [credentials, setCredentials] = useState([{ username: "", email: "", password: "" }]);
   const { loggedin } = useLogin();
 
-  const host = import.meta.env.VITE_localhost;
+  const host =' http://localhost:5000';
   let history = useNavigate();
 
   const toggleSignup = () => {
@@ -30,11 +31,10 @@ const LoginSignup = () => {
       localStorage.setItem("auth-token", json.authToken);
       loggedin();
       history("/");
-     
-     
-      // showAlert("Login successful", "success");
+
+      showAlert("Login successful", "success");
     } else {
-      // showAlert("Please check your credentials", "error");
+      showAlert("Please check your credentials", "error");
     }
   };
 
@@ -52,10 +52,10 @@ const LoginSignup = () => {
     if (json.success) {
       localStorage.setItem("auth-token", json.authToken);
       history("/");
-      alert("user created");
-      // showAlert("Login successful", "success");
+
+      showAlert("User created successfully", "success");
     } else {
-      // showAlert("Please check your credentials", "error");
+      showAlert("Please check your credentials", "error");
     }
   };
 
@@ -187,3 +187,6 @@ const LoginSignup = () => {
 };
 
 export default LoginSignup;
+LoginSignup.propTypes = {
+  showAlert: PropTypes.func,
+};

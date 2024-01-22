@@ -7,5 +7,5 @@ const Alert = (props) => {
 export default Alert;
 
 Alert.propTypes = {
-  alert: PropTypes.string,
+  alert: PropTypes.object,
 };

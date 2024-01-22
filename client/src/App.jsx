@@ -67,11 +67,11 @@ function App() {
         <Navbar mode={mode} username={user.username} showAlert={showAlert} changeTheme={changeTheme} />
         <Alert alert={alert} />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home  />} />
           <Route exact path="/me" element={<Profile />} />
           <Route exact path="/new" element={<CreateBlog userId={user._id} author_name={user.username} />} />
           {/* <Route exact path="/product" element={<Product/>} /> */}
-          <Route exact path="/login" element={<LoginSignup />} />
+          <Route exact path="/login" element={<LoginSignup showAlert={showAlert} />} />
         </Routes>
         <GoToTopButton />
         <Footer />

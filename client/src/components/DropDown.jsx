@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 
 const Dropdown = (props) => {
-  const { username } = props;
+  const { username,showAlert } = props;
   const [isOpen, setIsOpen] = useState(false);
    const { theme } = useContext(ThemeContext);
    const { loggedout } = useLogin();
@@ -23,6 +23,7 @@ const Dropdown = (props) => {
     localStorage.removeItem("auth-token");
     loggedout();
     setIsOpen(false);
+    showAlert("Logged out ", "success")
   };
 
   return (
@@ -61,4 +62,5 @@ export default Dropdown;
 
 Dropdown.propTypes = {
   username: PropTypes.string,
+  showAlert: PropTypes.func,
 };

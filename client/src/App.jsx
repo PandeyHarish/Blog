@@ -69,12 +69,12 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home  />} />
           <Route exact path="/me" element={<Profile />} />
-          <Route exact path="/new" element={<CreateBlog userId={user._id} author_name={user.username} />} />
+          <Route exact path="/new" element={<CreateBlog userId={user._id} author_name={user.username} showAlert={showAlert}/>} />
           {/* <Route exact path="/product" element={<Product/>} /> */}
           <Route exact path="/login" element={<LoginSignup showAlert={showAlert} />} />
         </Routes>
         <GoToTopButton />
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );

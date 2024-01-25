@@ -23,7 +23,7 @@ const Dropdown = (props) => {
     localStorage.removeItem("auth-token");
     loggedout();
     setIsOpen(false);
-    showAlert("Logged out ", "success")
+    showAlert("Logged out", "success")
   };
 
   return (

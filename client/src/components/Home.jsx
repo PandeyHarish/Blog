@@ -10,7 +10,7 @@ import Sidebar from "./Sidebar";
 const Home = () => {
   return (
     <>
-      <div className="flex flex-wrap h-screen">
+      <div className="flex flex-wrap h-screen ">
         
         <BlogItem/>
         {/* <ViewBlog/> */}

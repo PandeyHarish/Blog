@@ -4,16 +4,15 @@ import ThemeContext from "../context/ThemeContext";
 import { useLogin } from "../context/LoginContext";
 import { useContext } from "react";
 import PropTypes from "prop-types";
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function CreateBlog(props) {
   const [content, setContent] = useState({ title: "", body: "", tag: "", category: "" });
   const [image, setImage] = useState(null);
   const { isLoggedIn } = useLogin();
   const { theme } = useContext(ThemeContext);
-  const { userId, author_name } = props;
- 
+  const history = useNavigate();
+  const { userId, author_name, showAlert } = props;
 
   const handleEditorChange = (content, editor) => {
     setContent((prevContent) => ({ ...prevContent, body: editor.getContent() }));
@@ -63,17 +62,19 @@ export default function CreateBlog(props) {
         // Reset the content and image state after submission if needed
         setContent({ title: "", body: "", tag: "", category: "" });
         setImage(null);
+        history("/me");
+        showAlert("Created successfully", "success");
       } else {
-        console.error("Error submitting form:", response.statusText);
+        showAlert("Please check the fields", "error");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      showAlert("Error submitting", "error");
     }
   };
 
   if (isLoggedIn) {
     return (
-      <div className="m-6  mt-12 flex item-center justify-center">
+      <div className="m-6  mt-12 flex item-center justify-center ">
         <div className={`p-6 rounded-lg   ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}>
           <h1 className="text-3xl">New Blog Post</h1>
 
@@ -146,8 +147,8 @@ export default function CreateBlog(props) {
   }
 }
 
-
 CreateBlog.propTypes = {
   userId: PropTypes.string,
   author_name: PropTypes.string,
+  showAlert: PropTypes.func,
 };

@@ -26,7 +26,11 @@ const BlogItem = () => {
         {
           data.map((blog)=>{
            
-           return <BlogCard key={blog._id} title={blog.title} content={blog.content} imageUrl={blog.imageUrl} author={blog.author_name} timestamp={blog.dateTime} />;
+           return (
+             <div key={blog._id} >
+               <BlogCard title={blog.title} content={blog.content} imageUrl={blog.imageUrl} author={blog.author_name} timestamp={blog.dateTime} />
+             </div>
+           );
           })
         }
       </div>

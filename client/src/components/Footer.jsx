@@ -6,8 +6,8 @@ const Footer = () => {
    const { theme } = useContext(ThemeContext);
   return (
     <>
-      <div className="w-full fixed bottom-0">
-        <div className={`w-full   py-5 ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}>
+      <div className="w-full  ">
+        <div className={`w-full  py-5 ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-5 mx-auto md:w-[970px]">
             <div className="col-span-1 flex items-center mx-auto">
               <h2 className="text-2xl font-bold">Blogger</h2>

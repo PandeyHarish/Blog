@@ -7,7 +7,7 @@ const BlogCard = (props) => {
   const { title, author, content, imageUrl,timestamp } = props;
   const { theme } = useContext(ThemeContext);
   return (
-    <div className="m-6 sm:ml-32 mt-12">
+    <div className="m-6 sm:ml-32 mt-12 ">
       {/* card div */}
       <div className={`p-4 w-full sm:w-[384px] mt-4 md:w-[650px] ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
         <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer">{title}</h3>

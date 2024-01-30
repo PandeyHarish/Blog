@@ -1,33 +1,54 @@
-import { useContext } from "react";
-import test from "./assets/images/test.jpg";
+import { useContext, useEffect, useState } from "react";
+import defaultImage from "./assets/images/test.jpg";
 import ThemeContext from "../context/ThemeContext";
+import { useParams } from "react-router-dom";
+import parse from "html-react-parser";
 
 const ViewBlog = () => {
   const { theme } = useContext(ThemeContext);
+  const [blog, setBlog] = useState([]);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const url = `http://localhost:5000/api/blogs/view/${id}`;
+
+        const response = await fetch(url, {
+          method: "GET",
+        });
+        if (!response.ok) {
+          throw new Error("Blog not found");
+        }
+        const data = await response.json();
+        setBlog(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchBlog();
+  }, []);
+  var imageUrl = blog.imageUrl;
+  var image;
+  if (imageUrl) {
+    image = `http://localhost:5000/images/${imageUrl}`;
+  } else {
+    image = defaultImage;
+  }
+  var content = blog.content;
 
   return (
     <>
-      <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-32 mt-12">
+      <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-32 mt-12 mb-8">
         <div className={`w-full sm:w-[384px] md:w-[650px] rounded-md ${theme === "dark" ? "bg-[#344955]" : "bg-white"} p-6`}>
-          <h3 className="font-bold text-3xl hover:text-blue-600 cursor-pointer my-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, ea.
-          </h3>
+          <h3 className="font-bold text-3xl hover:text-blue-600 cursor-pointer my-3">{blog.title}</h3>
           <p className="my-4">
-            by <span className="text-blue-600 font-bold">Author</span> | Timestamp
+            by <span className="text-blue-600 font-bold">{blog.author_name}</span> | {new Date(blog.dateTime).toGMTString()}
           </p>
           <hr className="my-5" />
-          <img src={test} alt="title" className="mt-5 mb-5 rounded-md w-full" />
-          <p className="text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam nemo fuga quis beatae ut illo accusantium esse. Aspernatur dignissimos
-            eius reiciendis. Laboriosam, perferendis. Obcaecati dolorum perspiciatis alias laudantium distinctio suscipit aperiam possimus odio, earum
-            aliquam fugit illum saepe cupiditate quae tempore sequi facere recusandae doloremque in! Minus fugiat error, corrupti inventore, quam
-            sapiente iure, distinctio quasi tenetur vero aperiam maxime aut at impedit id delectus consequuntur repellendus vitae omnis. Laborum
-            provident suscipit alias quibusdam magni mollitia ea sunt dolorem labore? Optio corrupti impedit, vel ullam nam quam dolores possimus, eos
-            eaque placeat laborum. Maiores magnam molestiae sequi corporis vero cum alias tempore totam voluptas esse explicabo aut, officiis
-            laboriosam, maxime saepe deserunt, quasi nobis nostrum cumque recusandae quisquam dignissimos dolor earum. Accusantium beatae excepturi
-            blanditiis repellat delectus, voluptatem architecto minus nulla facere dolore hic aperiam at nihil non recusandae adipisci in aspernatur
-            vel esse assumenda nemo iste. Facilis, labore. Animi!
-          </p>
+          <img src={image} alt="title" className="mt-5 mb-5 rounded-md w-full h-52 object-contain" />
+          <p className="text-justify">{content}</p>
         </div>
       </div>
     </>

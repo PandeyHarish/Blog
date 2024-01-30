@@ -11,6 +11,7 @@ import Profile from "./components/Profile";
 import CreateBlog from "./components/CreateBlog";
 import GoToTopButton from "./components/GoToTopButton";
 import Alert from "./components/Alert";
+import ViewBlog from "./components/ViewBlog";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -70,7 +71,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/me" element={<Profile />} />
           <Route exact path="/new" element={<CreateBlog userId={user._id} author_name={user.username} showAlert={showAlert} />} />
-          {/* <Route exact path="/product" element={<Product/>} /> */}
+          <Route exact path="/view/:id" element={<ViewBlog/>} />
           <Route exact path="/login" element={<LoginSignup showAlert={showAlert} />} />
         </Routes>
         <GoToTopButton />

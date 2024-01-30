@@ -43,6 +43,7 @@ function App() {
     }, 1500);
   };
 
+
   const authToken = localStorage.getItem("auth-token");
   const fetchinfo = async () => {
     const res = await fetch("http://127.0.0.1:5000/api/auth/user/getuser", {
@@ -52,7 +53,6 @@ function App() {
     const paresedData = await res.json();
     setUser(paresedData);
   };
-
   useEffect(() => {
     if (authToken) {
       fetchinfo();
@@ -67,14 +67,14 @@ function App() {
         <Navbar mode={mode} username={user.username} showAlert={showAlert} changeTheme={changeTheme} />
         <Alert alert={alert} />
         <Routes>
-          <Route exact path="/" element={<Home  />} />
+          <Route exact path="/" element={<Home />} />
           <Route exact path="/me" element={<Profile />} />
-          <Route exact path="/new" element={<CreateBlog userId={user._id} author_name={user.username} showAlert={showAlert}/>} />
+          <Route exact path="/new" element={<CreateBlog userId={user._id} author_name={user.username} showAlert={showAlert} />} />
           {/* <Route exact path="/product" element={<Product/>} /> */}
           <Route exact path="/login" element={<LoginSignup showAlert={showAlert} />} />
         </Routes>
         <GoToTopButton />
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     </>
   );

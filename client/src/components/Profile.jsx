@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ThemeContext from "../context/ThemeContext";
 import { useContext, useEffect, useState } from "react";
 import test from "./assets/images/test.jpg";
@@ -8,7 +8,7 @@ const Profile = () => {
   const { theme } = useContext(ThemeContext);
   const { isLoggedIn } = useLogin();
   const [user, setUser] = useState([]);
-
+  const navigate = useNavigate();
   const token = localStorage.getItem("auth-token");
   const fetchInfo = async () => {
     const res = await fetch("http://127.0.0.1:5000/api/auth/user/getuser", {
@@ -67,7 +67,7 @@ const Profile = () => {
       </>
     );
   } else {
-    window.location.href = "/login";
+    navigate("/login");
     return null; // Add a return statement here to avoid potential errors
   }
 };

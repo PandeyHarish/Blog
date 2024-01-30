@@ -40,7 +40,7 @@ const Dropdown = (props) => {
         >
           <div className="py-1">
             <Link to={"/me"} onClick={hide} className={`block w-full text-left px-4 py-2 text-sm ${theme === "light" ? "text-gray-700" : "text-white"} `}>
-              Profile
+              Profile 
             </Link>
             <button
               onClick={logout}

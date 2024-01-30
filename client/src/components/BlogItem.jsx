@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
+// import parse from "html-react-parser";
 
 const BlogItem = () => {
   const [data, setData] = useState([]);
@@ -27,8 +28,14 @@ const BlogItem = () => {
           data.map((blog)=>{
            
            return (
-             <div key={blog._id} >
-               <BlogCard title={blog.title} content={blog.content} imageUrl={blog.imageUrl} author={blog.author_name} timestamp={blog.dateTime} />
+             <div key={blog._id}>
+               <BlogCard
+                 title={blog.title}
+                 content={blog.content}
+                 imageUrl={blog.imageUrl}
+                 author={blog.author_name}
+                 timestamp={blog.dateTime}
+               />
              </div>
            );
           })

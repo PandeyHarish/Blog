@@ -36,7 +36,7 @@ export default function CreateBlog(props) {
     setImage(e.target.files[0]);
   };
 
-  const key = import.meta.env.VITE_tinymce_key;
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -121,7 +121,7 @@ export default function CreateBlog(props) {
 
               <div className="flex-1 ">
                 <Editor
-                  apiKey={key}
+                  tinymceScriptSrc={"/tinymce/tinymce.min.js"}
                   value={content.body}
                   init={{
                     direction: "ltr",

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import defaultImage from "./assets/images/test.jpg";
 import ThemeContext from "../context/ThemeContext";
 import { useParams } from "react-router-dom";
-import parse from "html-react-parser";
+
 
 const ViewBlog = () => {
   const { theme } = useContext(ThemeContext);

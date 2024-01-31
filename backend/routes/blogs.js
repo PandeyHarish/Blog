@@ -79,4 +79,17 @@ router.post("/fetchuserblogs", fetchuser, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch blogs" });
   }
 });
+// Set up a route to fetch a blog by ID
+router.get('/view/:id', async (req, res) => {
+  try {
+    const blog = await Article.findById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+    res.json(blog);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 module.exports = router;

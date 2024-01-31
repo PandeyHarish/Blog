@@ -36,7 +36,6 @@ export default function CreateBlog(props) {
     setImage(e.target.files[0]);
   };
 
- 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -56,16 +55,13 @@ export default function CreateBlog(props) {
       });
 
       if (response.ok) {
-        // const data = await response.json();
-        console.log("data saved"); // Log the response from the server
-
         // Reset the content and image state after submission if needed
         setContent({ title: "", body: "", tag: "", category: "" });
         setImage(null);
         history("/me");
         showAlert("Created successfully", "success");
       } else {
-        showAlert("Please check the fields", "error");
+        showAlert("Please check the fields", "warning");
       }
     } catch (error) {
       showAlert("Error submitting", "error");

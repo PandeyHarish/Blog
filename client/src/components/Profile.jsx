@@ -47,10 +47,16 @@ const Profile = () => {
           {/* card div */}
           <div className="">
             <h3 className="text-2xl font-semibold my-5">Articles</h3>
-            <div className={`p-4 sm:w-[384px] border md:w-[650px] ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
-              <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, ea.
-              </h3>
+            <div className={`p-4 sm:w-[384px]  md:w-[500px] lg:w-[650px] border ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
+              <div className="flex justify-between">
+                <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, ea.
+                </h3>
+                <div className="">
+                  <i className="ri-file-edit-line text-xl cursor-pointer bg-green-600 p-2 rounded-md hover:bg-green-700"></i>
+                  <i className="ri-delete-bin-line text-xl cursor-pointer ml-4 bg-red-500 p-2 rounded-md hover:bg-red-700"></i>
+                </div>
+              </div>
               <p className="py-3">
                 by <span className="text-[#366bea] font-medium">Author</span> : timestamp
               </p>

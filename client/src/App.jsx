@@ -69,9 +69,9 @@ function App() {
         <Alert alert={alert} />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/me" element={<Profile />} />
+          <Route exact path="/me" element={<Profile showAlert={showAlert} />} />
           <Route exact path="/new" element={<CreateBlog userId={user._id} author_name={user.username} showAlert={showAlert} />} />
-          <Route exact path="/view/:id" element={<ViewBlog/>} />
+          <Route exact path="/view/:id" element={<ViewBlog />} />
           <Route exact path="/login" element={<LoginSignup showAlert={showAlert} />} />
         </Routes>
         <GoToTopButton />

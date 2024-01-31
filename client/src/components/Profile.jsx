@@ -3,24 +3,66 @@ import ThemeContext from "../context/ThemeContext";
 import { useContext, useEffect, useState } from "react";
 import test from "./assets/images/test.jpg";
 import { useLogin } from "../context/LoginContext";
+import parse from "html-react-parser";
+import PropTypes from "prop-types";
 
-const Profile = () => {
+const Profile = ({showAlert}) => {
   const { theme } = useContext(ThemeContext);
   const { isLoggedIn } = useLogin();
   const [user, setUser] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("auth-token");
   const fetchInfo = async () => {
-    const res = await fetch("http://127.0.0.1:5000/api/auth/user/getuser", {
-      method: "POST",
-      headers: { "auth-token": token },
-    });
-    const parsedData = await res.json();
-    setUser(parsedData);
+    try {
+      const res = await fetch("http://127.0.0.1:5000/api/auth/user/getuser", {
+        method: "POST",
+        headers: { "auth-token": token },
+      });
+      const parsedData = await res.json();
+      setUser(parsedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const deleteBlog = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/blogs/deleteblog/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token"),
+        },
+      });
+
+      const newBLogs = blogs.filter((blogs) => {
+        return blogs._id !== id;
+      });
+      setBlogs(newBLogs);
+      if (res.ok) {
+        showAlert("Blog deleted successfully", "error");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchBlogs = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/blogs/fetchuserblogs", {
+        method: "POST",
+        headers: { "auth-token": token },
+      });
+      const parsedResponse = await res.json();
+      setBlogs(parsedResponse);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
     fetchInfo();
+    fetchBlogs();
   }, []);
 
   if (isLoggedIn) {
@@ -45,30 +87,32 @@ const Profile = () => {
           </div>
           <hr />
           {/* card div */}
-          <div className="">
-            <h3 className="text-2xl font-semibold my-5">Articles</h3>
-            <div className={`p-4 sm:w-[384px]  md:w-[500px] lg:w-[650px] border ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
-              <div className="flex justify-between">
-                <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, ea.
-                </h3>
-                <div className="">
-                  <i className="ri-file-edit-line text-xl cursor-pointer bg-green-600 p-2 rounded-md hover:bg-green-700"></i>
-                  <i className="ri-delete-bin-line text-xl cursor-pointer ml-4 bg-red-500 p-2 rounded-md hover:bg-red-700"></i>
+          <h3 className="text-2xl font-semibold my-5">Articles</h3>
+          {blogs.map((blog) => {
+            return (
+              <div className="my-4" key={blog._id}>
+                <div className={`p-4 sm:w-[384px]  md:w-[500px] lg:w-[650px] border ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
+                  <div className="flex justify-between">
+                    <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer">{blog.title}</h3>
+                    <div className="">
+                      <i className="ri-file-edit-line text-xl cursor-pointer bg-green-600 p-2 rounded-md hover:bg-green-700"></i>
+                      <i
+                        className="ri-delete-bin-line text-xl cursor-pointer ml-4 bg-red-500 p-2 rounded-md hover:bg-red-700"
+                        onClick={() => deleteBlog(blog._id)}
+                      ></i>
+                    </div>
+                  </div>
+                  <p className="py-3">
+                    by <span className="text-[#366bea] font-medium">{blog.author_name}</span> : {new Date(blog.dateTime).toGMTString()}
+                  </p>
+                  <div className="sm:flex">
+                    <img src={test} alt="" className="w-full sm:w-[145px] h-[200px] sm:h-[100px] rounded-md" />
+                    <div className="px-2 mt-4 sm:mt-0">{parse(blog.content)}</div>
+                  </div>
                 </div>
               </div>
-              <p className="py-3">
-                by <span className="text-[#366bea] font-medium">Author</span> : timestamp
-              </p>
-              <div className="sm:flex">
-                <img src={test} alt="" className="w-full sm:w-[145px] h-[200px] sm:h-[100px] rounded-md" />
-                <div className="px-2 mt-4 sm:mt-0">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos odio ab sapiente dolore, fugiat natus facere sequi praesentium minima
-                  vero.
-                </div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </>
     );
@@ -79,3 +123,7 @@ const Profile = () => {
 };
 
 export default Profile;
+
+Profile.propTypes = {
+  showAlert: PropTypes.func,
+};

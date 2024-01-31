@@ -25,7 +25,7 @@ const articleValidation = [
   body("tag", "Enter a proper tag with at least 3 characters.").isLength({ min: 3 }),
 ];
 
-// POST endpoint to create a new article with validations
+// POST: endpoint to create a new article with validations
 router.post("/create", upload.single("image"), articleValidation, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -34,11 +34,10 @@ router.post("/create", upload.single("image"), articleValidation, async (req, re
 
   try {
     const { title, content, author, tag, category, author_name } = req.body;
-   
 
     // Check if a file was provided
     const imageUrl = req.file ? req.file.filename : null;
-    const date=new Date();
+    const date = new Date();
     const dateTime = date.toISOString();
 
     // Create a new article based on the Article model
@@ -50,9 +49,8 @@ router.post("/create", upload.single("image"), articleValidation, async (req, re
       author_name,
       tag,
       imageUrl, // Add the image URL to the article
-      dateTime
+      dateTime,
     });
-   
 
     res.status(201).json({ article: newArticle });
   } catch (error) {
@@ -60,6 +58,7 @@ router.post("/create", upload.single("image"), articleValidation, async (req, re
   }
 });
 
+// end point to fetch articles using: GET
 router.get("/fetcharticles", async (req, res) => {
   try {
     const blogs = await Article.find();
@@ -70,6 +69,7 @@ router.get("/fetcharticles", async (req, res) => {
   }
 });
 
+// End point to fetch user specific articles using: POST
 router.post("/fetchuserblogs", fetchuser, async (req, res) => {
   try {
     const notes = await Article.find({ user: req.user._id });
@@ -79,17 +79,38 @@ router.post("/fetchuserblogs", fetchuser, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch blogs" });
   }
 });
-// Set up a route to fetch a blog by ID
-router.get('/view/:id', async (req, res) => {
+
+// End point to fetch specific article according to click using: GET
+router.get("/view/:id", async (req, res) => {
   try {
+    // id has been sent in the params and read to fetch the arcticle with that id
     const blog = await Article.findById(req.params.id);
     if (!blog) {
-      return res.status(404).json({ message: 'Blog not found' });
+      return res.status(404).json({ message: "Blog not found" });
     }
     res.json(blog);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
+
+// End point to delete specific article using: DELETE
+router.delete("/deleteblog/:id", fetchuser, async (req, res) => {
+  try {
+    let blog = await Article.findById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+    if (blog.author.toString() !== req.user.id) {
+      return res.status(401).json({ error: "Not authorized to delete this note" });
+    }
+
+    blog = await Article.findByIdAndDelete(req.params.id);
+    res.json({ success: "The note has been deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete note" });
+  }
+});
+
 module.exports = router;

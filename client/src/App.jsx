@@ -1,4 +1,3 @@
-// import "./App.css";
 import "remixicon/fonts/remixicon.css";
 import LoginSignup from "./components/LoginSignup";
 import Navbar from "./components/Navbar";
@@ -43,7 +42,6 @@ function App() {
       setAlert(null);
     }, 1500);
   };
-
 
   const authToken = localStorage.getItem("auth-token");
   const fetchinfo = async () => {

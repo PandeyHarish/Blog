@@ -7,17 +7,17 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "node ./postinstall.cjs"
   },
   "dependencies": {
-    "@tinymce/tinymce-react": "^4.3.2",
     "html-react-parser": "^5.1.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.21.1",
-    "remixicon": "^4.0.1",
-    "tinymce": "^6.8.2"
+    "remixicon": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

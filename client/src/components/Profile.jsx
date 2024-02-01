@@ -63,6 +63,7 @@ const Profile = ({showAlert}) => {
   useEffect(() => {
     fetchInfo();
     fetchBlogs();
+    //eslint-disable-next-line 
   }, []);
 
   if (isLoggedIn) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import ThemeContext from "../context/ThemeContext";
 import { useLogin } from "../context/LoginContext";
 import { useContext } from "react";
@@ -7,17 +8,39 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateBlog(props) {
-  const [content, setContent] = useState({ title: "", body: "", tag: "", category: "" });
+  const [content, setContent] = useState({ title: "", tag: "", category: "" });
+  const [editorValue, setEditorValue] = useState("");
+
   const [image, setImage] = useState(null);
   const { isLoggedIn } = useLogin();
   const { theme } = useContext(ThemeContext);
   const history = useNavigate();
   const { userId, author_name, showAlert } = props;
-
-  const handleEditorChange = (content, editor) => {
-    setContent((prevContent) => ({ ...prevContent, body: editor.getContent() }));
-  };
   const [preview, setPreview] = useState();
+
+  // text editor toolbars and modules
+  var toolbarOptions = [
+    [{ font: [] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["blockquote", "code-block"],
+
+    [{ header: 1 }, { header: 2 }], // custom button values
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ script: "sub" }, { script: "super" }], // superscript/subscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    [{ direction: "rtl" }], // text direction
+
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+
+    [{ align: [] }],
+
+    ["clean"], // remove formatting button
+  ];
+  const module = {
+    toolbar: toolbarOptions,
+  };
+  // toolbar and modules end
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -42,7 +65,7 @@ export default function CreateBlog(props) {
     try {
       const formData = new FormData();
       formData.append("title", content.title);
-      formData.append("content", content.body);
+      formData.append("content", editorValue);
       formData.append("image", image);
       formData.append("author", userId);
       formData.append("author_name", author_name);
@@ -116,19 +139,7 @@ export default function CreateBlog(props) {
               </div>
 
               <div className="flex-1 ">
-                <Editor
-                  tinymceScriptSrc={"/tinymce/tinymce.min.js"}
-                  value={content.body}
-                  init={{
-                    direction: "ltr",
-                    plugins:
-                      "mentions anchor autolink charmap codesample emoticons  lists  searchreplace table visualblocks wordcount checklist  casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode tableofcontents  powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                    toolbar:
-                      "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                    menubar: false,
-                  }}
-                  onEditorChange={handleEditorChange}
-                />
+                <ReactQuill modules={module} value={editorValue} theme="snow" onChange={(editorValue) => setEditorValue(editorValue)} />
                 <button type="submit" className="bg-indigo-700 text-white hover:bg-indigo-800 px-4 py-2 mt-5    rounded-md">
                   Create
                 </button>

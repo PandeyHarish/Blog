@@ -4,6 +4,8 @@ const router = express.Router();
 const { Article } = require("../model/blogsModel");
 const multer = require("multer");
 const fetchuser = require("../middleware/fetchuser");
+const fs = require("fs");
+const path = require("path");
 
 // Multer storage configuration
 const storage = multer.diskStorage({
@@ -72,8 +74,8 @@ router.get("/fetcharticles", async (req, res) => {
 // End point to fetch user specific articles using: POST
 router.post("/fetchuserblogs", fetchuser, async (req, res) => {
   try {
-    const notes = await Article.find({ user: req.user._id });
-    res.json(notes);
+    const blogs = await Article.find({ user: req.user._id });
+    res.json(blogs);
   } catch (error) {
     console.error("Error fetching Blogs:", error.message);
     res.status(500).json({ error: "Failed to fetch blogs" });
@@ -100,16 +102,27 @@ router.delete("/deleteblog/:id", fetchuser, async (req, res) => {
   try {
     let blog = await Article.findById(req.params.id);
     if (!blog) {
-      return res.status(404).json({ error: "Note not found" });
+      return res.status(404).json({ error: "Blog not found" });
     }
     if (blog.author.toString() !== req.user.id) {
-      return res.status(401).json({ error: "Not authorized to delete this note" });
+      return res.status(401).json({ error: "Not authorized to delete this blog" });
+    }
+
+    // Retrieve the path of the image
+    const imageUrl = blog.imageUrl; // Replace with the actual field name storing the image path
+
+    // Construct the absolute path to the image file
+    const imagePath = path.join(__dirname, "public", imageUrl.replace("/images/", ""));
+
+    // Delete the image file from the device
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
     }
 
     blog = await Article.findByIdAndDelete(req.params.id);
-    res.json({ success: "The note has been deleted successfully" });
+    res.json({ success: "The blog has been deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete note" });
+    res.status(500).json({ error: "Failed to delete blog" });
   }
 });
 

@@ -1,7 +1,6 @@
 import ThemeContext from "../context/ThemeContext";
 import { useContext } from "react";
 import PropTypes from "prop-types";
-import parse from "html-react-parser";
 import defaultImage from "../components/assets/images/test.jpg";
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +30,9 @@ const BlogCard = (props) => {
         </p>
         <div className="sm:flex">
           <img src={image} alt={title} className="w-full  md:w-[200px] sm:w-[150px] rounded-md mb-4 sm:mb-0" />
-          <div className="px-2 sm:ml-4">{parse(content)}</div>
+          <div className="px-2 sm:ml-4"  >
+            <p dangerouslySetInnerHTML={{ __html: content }}></p>
+          </div>
         </div>
       </div>
     </div>
@@ -47,3 +48,6 @@ BlogCard.propTypes = {
   timestamp: PropTypes.string,
   id: PropTypes.string,
 };
+
+
+

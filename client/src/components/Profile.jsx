@@ -1,12 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import ThemeContext from "../context/ThemeContext";
 import { useContext, useEffect, useState } from "react";
-import test from "./assets/images/test.jpg";
 import { useLogin } from "../context/LoginContext";
 import parse from "html-react-parser";
 import PropTypes from "prop-types";
 
-const Profile = ({showAlert}) => {
+const Profile = ({ showAlert }) => {
   const { theme } = useContext(ThemeContext);
   const { isLoggedIn } = useLogin();
   const [user, setUser] = useState([]);
@@ -47,6 +46,10 @@ const Profile = ({showAlert}) => {
     }
   };
 
+  const viewblog = (id) => {
+    history(`/view/${id}`);
+  };
+
   const fetchBlogs = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/blogs/fetchuserblogs", {
@@ -63,7 +66,7 @@ const Profile = ({showAlert}) => {
   useEffect(() => {
     fetchInfo();
     fetchBlogs();
-    //eslint-disable-next-line 
+    //eslint-disable-next-line
   }, []);
 
   if (isLoggedIn) {
@@ -94,7 +97,9 @@ const Profile = ({showAlert}) => {
               <div className="my-4" key={blog._id}>
                 <div className={`p-4 sm:w-[384px]  md:w-[500px] lg:w-[650px] border ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
                   <div className="flex justify-between">
-                    <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer">{blog.title}</h3>
+                    <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer" onClick={() => viewblog(blog._id)}>
+                      {blog.title}
+                    </h3>
                     <div className="">
                       <i className="ri-file-edit-line text-xl cursor-pointer bg-green-600 p-2 rounded-md hover:bg-green-700"></i>
                       <i
@@ -107,7 +112,11 @@ const Profile = ({showAlert}) => {
                     by <span className="text-[#366bea] font-medium">{blog.author_name}</span> : {new Date(blog.dateTime).toGMTString()}
                   </p>
                   <div className="sm:flex">
-                    <img src={test} alt="" className="w-full sm:w-[145px] h-[200px] sm:h-[100px] rounded-md" />
+                    <img
+                      src={`http://localhost:5000/images/${blog.imageUrl}`}
+                      alt=""
+                      className="w-full sm:w-[145px] h-[200px] sm:h-[100px] rounded-md"
+                    />
                     <div className="px-2 mt-4 sm:mt-0">{parse(blog.content)}</div>
                   </div>
                 </div>

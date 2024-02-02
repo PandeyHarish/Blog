@@ -112,7 +112,7 @@ router.delete("/deleteblog/:id", fetchuser, async (req, res) => {
     const imageUrl = blog.imageUrl; // Replace with the actual field name storing the image path
 
     // Construct the absolute path to the image file
-    const imagePath = path.join(__dirname, "public", imageUrl.replace("/images/", ""));
+    const imagePath = path.join(__dirname, "../images/", imageUrl);
 
     // Delete the image file from the device
     if (fs.existsSync(imagePath)) {

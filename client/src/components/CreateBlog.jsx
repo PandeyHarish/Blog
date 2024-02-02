@@ -7,6 +7,7 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
+
 export default function CreateBlog(props) {
   const [content, setContent] = useState({ title: "", tag: "", category: "" });
   const [editorValue, setEditorValue] = useState("");
@@ -24,19 +25,13 @@ export default function CreateBlog(props) {
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
     ["bold", "italic", "underline", "strike"], // toggled buttons
     ["blockquote", "code-block"],
-
-    [{ header: 1 }, { header: 2 }], // custom button values
     [{ list: "ordered" }, { list: "bullet" }],
     [{ script: "sub" }, { script: "super" }], // superscript/subscript
     [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-    [{ direction: "rtl" }], // text direction
-
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-
     [{ align: [] }],
-
     ["clean"], // remove formatting button
   ];
+  
   const module = {
     toolbar: toolbarOptions,
   };
@@ -139,7 +134,9 @@ export default function CreateBlog(props) {
               </div>
 
               <div className="flex-1 ">
-                <ReactQuill modules={module} value={editorValue} theme="snow" onChange={(editorValue) => setEditorValue(editorValue)} />
+                <ReactQuill className="bg-white text-black" modules={module} value={editorValue} theme="snow" onChange={(editorValue) => setEditorValue(editorValue)} />
+             
+               
                 <button type="submit" className="bg-indigo-700 text-white hover:bg-indigo-800 px-4 py-2 mt-5    rounded-md">
                   Create
                 </button>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import defaultImage from "./assets/images/test.jpg";
 import ThemeContext from "../context/ThemeContext";
 import { useParams } from "react-router-dom";
-// import parse from "html-react-parser";
+
 
 const ViewBlog = () => {
   const { theme } = useContext(ThemeContext);
@@ -37,6 +37,7 @@ const ViewBlog = () => {
     image = defaultImage;
   }
   const content = blog.content;
+ 
 
   return (
     <>
@@ -47,7 +48,8 @@ const ViewBlog = () => {
             by <span className="text-blue-600 font-bold">{blog.author_name}</span> | {new Date(blog.dateTime).toGMTString()}
           </p>
           <hr className="my-5" />
-          <img src={image} alt="title" className="mt-5 mb-5 rounded-md w-full h-52 object-contain" />{}
+          <img src={image} alt="title" className="mt-5 mb-5 rounded-md w-full h-52 object-contain" />
+          {}
           <p className="text-justify" dangerouslySetInnerHTML={{ __html: content }}></p>
         </div>
       </div>

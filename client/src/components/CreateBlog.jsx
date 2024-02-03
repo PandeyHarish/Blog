@@ -7,11 +7,10 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-
 export default function CreateBlog(props) {
   const [content, setContent] = useState({ title: "", tag: "", category: "" });
   const [editorValue, setEditorValue] = useState("");
-
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const { isLoggedIn } = useLogin();
   const { theme } = useContext(ThemeContext);
@@ -31,7 +30,7 @@ export default function CreateBlog(props) {
     [{ align: [] }],
     ["clean"], // remove formatting button
   ];
-  
+
   const module = {
     toolbar: toolbarOptions,
   };
@@ -85,70 +84,76 @@ export default function CreateBlog(props) {
       showAlert("Error submitting", "error");
     }
   };
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, []);
 
-  if (isLoggedIn) {
-    return (
-      <div className="m-6  mt-12 flex item-center justify-center ">
-        <div className={`p-6 rounded-lg   ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}>
-          <h1 className="text-3xl">New Blog Post</h1>
+  return (
+    <div className="m-6  mt-12 flex item-center justify-center ">
+      <div className={`p-6 rounded-lg   ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}>
+        <h1 className="text-3xl">New Blog Post</h1>
 
-          <form onSubmit={handleSubmit} className="mt-5">
-            <div className="flex gap-4 flex-wrap">
-              <div className="flex-1 ">
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  value={content.title}
-                  onChange={(e) => setContent({ ...content, title: e.target.value })}
-                  className={`w-full p-4 border outline-none rounded-md mb-4  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}
-                  placeholder="Enter the title"
-                />
-                <input
-                  type="text"
-                  name="tag"
-                  id="tag"
-                  value={content.tag}
-                  onChange={(e) => setContent({ ...content, tag: e.target.value })}
-                  className={`w-full p-4 border outline-none rounded-md mb-4  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}
-                  placeholder="Enter the tag"
-                />
-                <input
-                  type="text"
-                  name="category"
-                  id="category"
-                  value={content.category}
-                  onChange={(e) => setContent({ ...content, category: e.target.value })}
-                  className={`w-full p-4 border outline-none rounded-md mb-4  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}
-                  placeholder="Enter the category"
-                />
-                <input type="file" name="image" id="image" accept="image/*" onChange={handleImageChange} className="my-2" />
-                <br />
-                {/* image preview */}
+        <form onSubmit={handleSubmit} className="mt-5">
+          <div className="flex gap-4 flex-wrap">
+            <div className="flex-1 ">
+              <input
+                type="text"
+                name="title"
+                id="title"
+                value={content.title}
+                onChange={(e) => setContent({ ...content, title: e.target.value })}
+                className={`w-full p-4 border outline-none rounded-md mb-4  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}
+                placeholder="Enter the title"
+              />
+              <input
+                type="text"
+                name="tag"
+                id="tag"
+                value={content.tag}
+                onChange={(e) => setContent({ ...content, tag: e.target.value })}
+                className={`w-full p-4 border outline-none rounded-md mb-4  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}
+                placeholder="Enter the tag"
+              />
+              <input
+                type="text"
+                name="category"
+                id="category"
+                value={content.category}
+                onChange={(e) => setContent({ ...content, category: e.target.value })}
+                className={`w-full p-4 border outline-none rounded-md mb-4  ${theme === "dark" ? "bg-[#344955]" : "bg-white"}`}
+                placeholder="Enter the category"
+              />
+              <input type="file" name="image" id="image" accept="image/*" onChange={handleImageChange} className="my-2" />
+              <br />
+              {/* image preview */}
 
-                {image && (
-                  <div>
-                    <img src={preview} alt="" className="w-44 object-contain" />
-                  </div>
-                )}
-              </div>
-
-              <div className="flex-1 ">
-                <ReactQuill className="bg-white text-black" modules={module} value={editorValue} theme="snow" onChange={(editorValue) => setEditorValue(editorValue)} />
-             
-               
-                <button type="submit" className="bg-indigo-700 text-white hover:bg-indigo-800 px-4 py-2 mt-5    rounded-md">
-                  Create
-                </button>
-              </div>
+              {image && (
+                <div>
+                  <img src={preview} alt="" className="w-44 object-contain" />
+                </div>
+              )}
             </div>
-          </form>
-        </div>
+
+            <div className="flex-1 ">
+              <ReactQuill
+                className="bg-white text-black"
+                modules={module}
+                value={editorValue}
+                theme="snow"
+                onChange={(editorValue) => setEditorValue(editorValue)}
+              />
+
+              <button type="submit" className="bg-indigo-700 text-white hover:bg-indigo-800 px-4 py-2 mt-5    rounded-md">
+                Create
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-    );
-  } else {
-    window.location.href = "/login";
-  }
+    </div>
+  );
 }
 
 CreateBlog.propTypes = {

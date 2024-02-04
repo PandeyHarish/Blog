@@ -126,4 +126,36 @@ router.delete("/deleteblog/:id", fetchuser, async (req, res) => {
   }
 });
 
+// End point to edit specific article using: PUT
+router.put("/edit/:id", fetchuser, async (req, res) => {
+  const { title, content, tag, category } = req.body;
+  const newArticle = {};
+  if (title) {
+    newArticle.title = title;
+  }
+  if (content) {
+    newArticle.content = content;
+  }
+  if (tag) {
+    newArticle.tag = tag;
+  }
+  if (category) {
+    newArticle.category = category;
+  }
+  try {
+    let article = await Article.findById(req.params.id);
+    if (!article) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+    if (article.author.toString() !== req.user.id) {
+      return res.status(401).json({ error: "Not authorized to edit this blog" });
+    }
+    article = await Article.findByIdAndUpdate(req.params.id, { $set: newArticle }, { new: true });
+    res.json({ success: "The blog has been edited successfully" });
+  } catch (error) {
+    console.error("Error updating: ", error.message);
+    res.status(500).json({ error: "Failed to update note" });
+  }
+});
+
 module.exports = router;

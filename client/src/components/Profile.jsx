@@ -95,7 +95,7 @@ const Profile = ({ showAlert }) => {
               <h4 className="text-xl">{user.email}</h4>
             </div>
             <div className="bg-indigo-500 my-2 sm:my-0 sm:ml-2 p-4 text-white rounded-md">
-              <h1 className="font-bold text-2xl">No. Of Articles 8</h1>
+              <h1 className="font-bold text-2xl">No. Of Articles {blogs.length}</h1>
             </div>
           </div>
           <div>
@@ -108,6 +108,7 @@ const Profile = ({ showAlert }) => {
         {/* card div */}
         <h3 className="text-2xl font-semibold my-5">Articles</h3>
         {blogs.map((blog) => {
+          
           return (
             <div className="my-4" key={blog._id}>
               <div className={`p-4 sm:w-[384px]  md:w-[500px] lg:w-[650px] border ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
@@ -132,14 +133,16 @@ const Profile = ({ showAlert }) => {
                 <div className="sm:flex">
                   <img
                     src={`http://localhost:5000/images/${blog.imageUrl}`}
-                    alt=""
-                    className="w-full sm:w-[145px] h-[200px] sm:h-[100px] rounded-md"
+                    alt={blog.title}
+                    className="w-full  md:w-[200px] sm:w-[150px] rounded-md mb-4 sm:mb-0"
                   />
+                  
                   <div className="px-2 mt-4 sm:mt-0">{parse(blog.content)}</div>
                 </div>
               </div>
             </div>
           );
+        
         })}
       </div>
     </>

@@ -3,7 +3,6 @@ import defaultImage from "./assets/images/test.jpg";
 import ThemeContext from "../context/ThemeContext";
 import { useParams } from "react-router-dom";
 
-
 const ViewBlog = () => {
   const { theme } = useContext(ThemeContext);
   const [blog, setBlog] = useState([]);
@@ -37,13 +36,12 @@ const ViewBlog = () => {
     image = defaultImage;
   }
   const content = blog.content;
- 
 
   return (
     <>
-      <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-32 mt-12 mb-8">
+      <div className="flex align-middle justify-center  mt-12 mb-8">
         <div className={`w-full sm:w-[384px] md:w-[650px] rounded-md ${theme === "dark" ? "bg-[#344955]" : "bg-white"} p-6`}>
-          <h3 className="font-bold text-3xl hover:text-blue-600 cursor-pointer my-3">{blog.title}</h3>
+          <h3 className="font-bold text-3xl  my-3">{blog.title}</h3>
           <p className="my-4">
             by <span className="text-blue-600 font-bold">{blog.author_name}</span> | {new Date(blog.dateTime).toGMTString()}
           </p>

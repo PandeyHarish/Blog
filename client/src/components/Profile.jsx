@@ -15,10 +15,12 @@ const Profile = ({ showAlert }) => {
   const token = localStorage.getItem("auth-token");
   const maxWords = 50; //maximum number of words to display in the cards
 
-  const viewblog = (id) => {
+  const viewBlog = (id) => {
     history(`/view/${id}`);
   };
-
+  const editBlog = (id) => {
+    history(`/edit/${id}`);
+  };
   const deleteBlog = async (id) => {
     try {
       const res = await fetch(`http://localhost:5000/api/blogs/deleteblog/${id}`, {
@@ -110,11 +112,14 @@ const Profile = ({ showAlert }) => {
             <div className="my-4" key={blog._id}>
               <div className={`p-4 sm:w-[384px]  md:w-[500px] lg:w-[650px] border ${theme === "dark" ? "bg-[#344955]" : "bg-white"} rounded-md`}>
                 <div className="flex justify-between">
-                  <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer" onClick={() => viewblog(blog._id)}>
+                  <h3 className="font-bold text-2xl hover:text-blue-600 cursor-pointer" onClick={() => viewBlog(blog._id)}>
                     {blog.title}
                   </h3>
                   <div className="">
-                    <i className="ri-file-edit-line text-xl cursor-pointer bg-green-600 p-2 rounded-md hover:bg-green-700"></i>
+                    <i
+                      className="ri-file-edit-line text-xl cursor-pointer bg-green-600 p-2 rounded-md hover:bg-green-700"
+                      onClick={() => editBlog(blog._id)}
+                    ></i>
                     <i
                       className="ri-delete-bin-line text-xl cursor-pointer ml-4 bg-red-500 p-2 rounded-md hover:bg-red-700"
                       onClick={() => deleteBlog(blog._id)}
